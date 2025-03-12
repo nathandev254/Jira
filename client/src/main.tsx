@@ -7,8 +7,9 @@ import App from "./App.tsx";
 import Page from "./Page.tsx";
 import Signup from "./page/Signup.tsx";
 import Signin from "./page/Signin.tsx";
+import Authlayout from "./page/Authlayout.tsx";
 
-// Define your router
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,13 +20,15 @@ const router = createBrowserRouter([
     element:<Page/>
   },
   {
-    path:"/signup",
-    element:<Signup/>
-  },
-  {
-    path:"/signin",
-    element:<Signin/>
+    path:"",
+    element:<Authlayout/>,
+    children: [
+      { path: "signin", element: <Signin /> },
+      { path: "signup", element: <Signup /> },
+    ],
   }
+ 
+
 ]);
 
 createRoot(document.getElementById("root")!).render(
