@@ -12,4 +12,12 @@ model User {
   username String 
   email String @unique
   Password String
+  CreatedAt DateTime @default(now())
+}
+
+model Task{
+  id String @id @default(uuid())
+  Title String
+  Description String
+  
 }

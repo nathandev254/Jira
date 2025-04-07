@@ -3,5 +3,5 @@ import { PrismaClient } from "@prisma/client";
 
 
 export const CreateTasks = (req: Request, res: Response): void => {
-  const Task = req.body
+  const {email,} = req.body
 };
