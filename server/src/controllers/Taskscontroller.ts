@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
+
 
 export const CreateTasks = (req: Request, res: Response): void => {
-  console.log("Task has been created");
-  res.send('hello there')
+  const Task = req.body
 };
