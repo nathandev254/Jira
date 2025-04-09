@@ -19,5 +19,5 @@ model Task{
   id String @id @default(uuid())
   Title String
   Description String
-  
+  CreatedAt DateTime @default(now())
 }
