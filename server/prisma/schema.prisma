@@ -12,12 +12,29 @@ model User {
   username String 
   email String @unique
   Password String
+  Tasks Task[]
   CreatedAt DateTime @default(now())
 }
 
 model Task{
   id String @id @default(uuid())
   Title String
-  Description String
+  Description String?
+  status Taskstatus @default(PENDING)
+  priority TaskPriority @default(MEDIUM)
+  user User @relation(fields: [UserId], references: [id])
+  UserId String
   CreatedAt DateTime @default(now())
+}
+
+enum Taskstatus {
+  COMPLETED
+  PENDING
+  IN_PROGRESS
+}
+
+enum TaskPriority {
+  HIGH
+  MEDIUM
+  LOW
 }
