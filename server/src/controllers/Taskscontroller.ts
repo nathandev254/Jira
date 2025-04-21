@@ -3,7 +3,26 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const CreateTask = () => {
-    
-}
+export const CreateTasks = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const data = req.body;
+    const task = prisma.task.create({ data });
+    console.log(data);
+    res.status(200).json({ message: "Task Created succefully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server error" });
+  }
+};
 
+export const GetTasks = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const Alltasks = await prisma.task.findMany();
+    res.status(200).json(Alltasks);
+
+  } catch (error) {
+    res.status(500).json({error: 'Failed to fetch the tasks'})
+  }
+};
