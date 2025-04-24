@@ -10,7 +10,7 @@ export const CreateTasks = async (
   try {
     const data = req.body;
     const task = prisma.task.create({ data });
-    console.log(data);
+    // console.log(data);
     res.status(200).json({ message: "Task Created succefully" });
   } catch (error) {
     res.status(500).json({ error: "Internal Server error" });
