@@ -2,6 +2,7 @@ import express, { Request, Response, Application } from "express";
 import cors from 'cors'
 import TasksRouter from "./routes/TasksRoute";
 import UserRouter from "./routes/UserRoute";
+import AuthRouter from "./routes/Authroute";
 
 
 const App: Application = express();
@@ -12,6 +13,7 @@ App.use(cors())
 
 App.use('/task', TasksRouter)
 App.use('/user', UserRouter)
+App.use('/register', AuthRouter)
 
 App.listen(8080, () : void => {
   console.log("the server is running in port 8080");
