@@ -13,7 +13,7 @@ App.use(cors())
 
 App.use('/task', TasksRouter)
 App.use('/user', UserRouter)
-App.use('/register', AuthRouter)
+App.use('/', AuthRouter)
 
 App.listen(8080, () : void => {
   console.log("the server is running in port 8080");

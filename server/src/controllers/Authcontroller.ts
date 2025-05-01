@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 const prisma = new PrismaClient();
+dotenv.config();
+const SECRET = process.env.SECRET_KEY as string;
 
 export const Register = async (req: Request, res: Response): Promise<void> => {
   const { username, firstname, lastname, email, password } = req.body;
@@ -11,7 +15,6 @@ export const Register = async (req: Request, res: Response): Promise<void> => {
     const Exstinguser = await prisma.user.findUnique({ where: { email } });
 
     if (Exstinguser) res.status(400).json("user already exists");
-    return
 
     const hashedpassword = await bcrypt.hash(password, 10);
 
@@ -25,10 +28,34 @@ export const Register = async (req: Request, res: Response): Promise<void> => {
       },
     });
     res.status(200).json("user created successfully");
-    return
-
+    return;
   } catch (error) {
     res.status(500).json({ error: "Failed to create the user" });
-    return
+    return;
+  }
+};
+
+export const Login = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, password } = req.body;
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      res.status(401).json("wrong credentials");
+      return;
+    }
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      },
+      SECRET
+    );
+
+    res.status(201).json({ message: "User logged in succefully", token });
+  } catch (error) {
+    res.status(500).json("Failed to login");
   }
 };
