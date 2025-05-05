@@ -18,11 +18,9 @@ export const CreateTasks = async (
 };
 
 export const GetTasks = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const Alltasks = await prisma.task.findMany();
-    res.status(200).json(Alltasks);
-
-  } catch (error) {
-    res.status(500).json({error: 'Failed to fetch the tasks'})
-  }
+ try {
+  res.send('Authenticated')
+ } catch (error) {
+  
+ }
 };
