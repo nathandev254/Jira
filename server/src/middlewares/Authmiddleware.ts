@@ -4,9 +4,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
-const SECRET  = process.env.SECRET_KEY as string;
-
-
+const SECRET = process.env.SECRET_KEY as string;
 
 declare module "express-serve-static-core" {
   interface Request {
@@ -14,21 +12,22 @@ declare module "express-serve-static-core" {
   }
 }
 
-export const Verifytoken = (
+export const Verifytoken= (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+) : void  => {
   const Authheader = req.headers["authorization"];
   const Token = Authheader?.split(" ")[1];
 
   if (!Token) {
     res.status(401).json({ message: "token missing" });
+     return
   }
 
   jwt.verify(Token, SECRET, (err, decode) => {
-    if (err) res.status(403).json({ message: "token is invalid" });
+    if (err)  res.status(403).json({ message: "token is invalid" }); 
     req.user = decode;
+    next();
   });
-  next();
 };

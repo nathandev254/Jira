@@ -18,9 +18,9 @@ export const CreateTasks = async (
 };
 
 export const GetTasks = async (req: Request, res: Response): Promise<void> => {
- try {
-  res.send('Authenticated')
- } catch (error) {
-  
- }
+  try {
+    res.status(200).json("All tasks");
+  } catch (error) {
+    res.status(500).json("failed to get the tasks");
+  }
 };
