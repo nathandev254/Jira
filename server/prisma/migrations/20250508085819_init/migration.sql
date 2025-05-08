@@ -12,7 +12,7 @@ CREATE TABLE "User" (
     "lastname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "CreatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -20,12 +20,12 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Task" (
     "id" TEXT NOT NULL,
-    "Title" TEXT NOT NULL,
-    "Description" TEXT,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
     "status" "Taskstatus" NOT NULL DEFAULT 'PENDING',
     "priority" "TaskPriority" NOT NULL DEFAULT 'MEDIUM',
-    "UserId" TEXT NOT NULL,
-    "CreatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userid" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Task_pkey" PRIMARY KEY ("id")
 );
@@ -34,4 +34,4 @@ CREATE TABLE "Task" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
-ALTER TABLE "Task" ADD CONSTRAINT "Task_UserId_fkey" FOREIGN KEY ("UserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Task" ADD CONSTRAINT "Task_userid_fkey" FOREIGN KEY ("userid") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
