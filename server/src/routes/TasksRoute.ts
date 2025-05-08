@@ -5,7 +5,7 @@ import { Verifytoken } from "../middlewares/Authmiddleware";
 
 const TasksRouter = Router()
 
-TasksRouter.post('/', CreateTasks )
+TasksRouter.post('/', Verifytoken, CreateTasks )
 TasksRouter.get('/', Verifytoken, GetTasks )
 
 export default TasksRouter
