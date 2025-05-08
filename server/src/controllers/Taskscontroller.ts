@@ -10,13 +10,13 @@ export const CreateTasks = async (
 ): Promise<void> => {
   try {
     const userid = (req.user as JwtPayload).id;
-    console.log(req.user)
-    // const { title, description } = req.body;
-    // const task = await prisma.task.create({
-    //   data: { title, description, userid },
-    // });
-    // // console.log(data);
-    res.status(200).json({ message: "Task Created succefully"});
+    console.log(userid);
+    const { title, description } = req.body;
+    const task = await prisma.task.create({
+      data: { title, description: description || undefined, userid },
+    });
+    // console.log(userExists);
+    res.status(200).json({ message: "Task Created succefully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server error" });
@@ -25,9 +25,10 @@ export const CreateTasks = async (
 
 export const GetTasks = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userid = (req.user as JwtPayload).UserId;
-    // const Tasks = await prisma.task.findMany({ where: { UserId : userid } });
-    res.status(200).json({ message: "Tasks fetched" });
+    const userid = (req.user as JwtPayload).id;
+    const Tasks = await prisma.task.findMany({ where: { userid } });
+
+    res.status(200).json({ message: "Tasks fetched", Tasks });
   } catch (error) {
     res.status(500).json("failed to fetch the tasks");
   }
