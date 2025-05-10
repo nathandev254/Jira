@@ -33,3 +33,16 @@ export const GetTasks = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json("failed to fetch the tasks");
   }
 };
+
+export const GetTasks = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userid = (req.user as JwtPayload).id;
+    const Tasks = await prisma.task.findMany({ where: { userid } });
+
+    res.status(200).json({ message: "Tasks fetched", Tasks });
+  } catch (error) {
+    res.status(500).json("failed to fetch the tasks");
+  }
+};
+
+
