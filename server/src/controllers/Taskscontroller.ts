@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Taskstatus } from "@prisma/client";
 import { JwtPayload } from "jsonwebtoken";
 
 const prisma = new PrismaClient();
@@ -34,15 +34,24 @@ export const GetTasks = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const GetTasks = async (req: Request, res: Response): Promise<void> => {
+export const DeleteTasks = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const userid = (req.user as JwtPayload).id;
-    const Tasks = await prisma.task.findMany({ where: { userid } });
+    const taskid = req.params.id;
 
-    res.status(200).json({ message: "Tasks fetched", Tasks });
+    const taskexists = await prisma.task.findUnique({ where: { id: taskid } });
+    if (!taskexists) {
+      res.status(404).json({ message: "Task Doesnt exists" });
+      return;
+    }
+
+    await prisma.task.delete({ where: { id: taskid } });
+
+    res.status(200).json({ message: "Task deleted succefully" });
   } catch (error) {
-    res.status(500).json("failed to fetch the tasks");
+    res.status(500).json({ error: "failed to delete task" });
   }
 };
-
-
