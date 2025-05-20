@@ -1,10 +1,5 @@
-
 function App() {
-  return (
-   <div>
-      <Sidebar/>
-   </div>
-  )
+  return <div>Home</div>;
 }
 
-export default App
+export default App;

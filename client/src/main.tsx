@@ -5,30 +5,28 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 import Page from "./Page.tsx";
-// import Signup from "./page/Signup.tsx";
 import Signin from "./page/Signin.tsx";
-import Authlayout from "./page/Authlayout.tsx";
-
+import Authlayout from "./layouts/Authlayout.tsx";
+import Layout from "./layouts/Sidebarlayout.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <Layout>
+        <App />{" "}
+      </Layout>
+    ),
   },
   {
-    path:"/page",
-    element:<Page/>
+    path: "/page",
+    element: <Page />,
   },
   {
-    path:"",
-    element:<Authlayout/>,
-    children: [
-      { path: "signin", element: <Signin /> },
-      // { path: "signup", element: <Signup /> },
-    ],
-  }
- 
-
+    path: "",
+    element: <Authlayout />,
+    children: [{ path: "signin", element: <Signin /> }],
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
