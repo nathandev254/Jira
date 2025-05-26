@@ -39,6 +39,13 @@ export default function Dashboard() {
             <p className="text-2xl font-bold">$3,200</p>
           </CardContent>
         </Card>
+        <Card className="flex items-center gap-4 p-4">
+          <DollarSign className="text-primary" />
+          <CardContent>
+            <h2 className="text-lg font-semibold">Revenue</h2>
+            <p className="text-2xl font-bold">$3,200</p>
+          </CardContent>
+        </Card>
       </div>
 
       <Card className="p-6">
