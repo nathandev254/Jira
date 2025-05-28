@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/page/AppSidebar";
 import Navbar from "@/page/Navbar";
 import { Outlet } from "react-router";
@@ -9,7 +9,6 @@ export default function Layout() {
       <AppSidebar />
       <Navbar />
       <main>
-        <SidebarTrigger />
         <Outlet />
       </main>
     </SidebarProvider>
