@@ -1,6 +1,11 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Search, Bell } from "lucide-react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 function Navbar() {
   return (
