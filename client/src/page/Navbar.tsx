@@ -2,10 +2,14 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Search, Bell } from "lucide-react";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Dropdown from './Dropdown'
 
 function Navbar() {
   return (
@@ -32,6 +36,7 @@ function Navbar() {
         <div className="relative h-10 w-10 rounded-full bg-blue-700 text-white flex items-center justify-center text-lg after:content-[''] after:absolute after:w-3 after:h-3 after:bg-green-600 after:rounded-full after:bottom-0 after:right-0">
           JD
         </div>
+        <Dropdown></Dropdown>
       </div>
     </header>
   );
