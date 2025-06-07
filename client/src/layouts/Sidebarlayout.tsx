@@ -8,9 +8,9 @@ export default function Layout() {
     <SidebarProvider>
       <AppSidebar />
       <Navbar />
-      <main>
-        <Outlet />
-      </main>
+      <div>
+        <Outlet></Outlet>
+      </div>
     </SidebarProvider>
   );
 }

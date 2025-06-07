@@ -1,15 +1,7 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Search, Bell } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Dropdown from './Dropdown'
+import Dropdown from "./Dropdown";
 
 function Navbar() {
   return (
@@ -29,14 +21,11 @@ function Navbar() {
           className="pl-9 bg-muted rounded-full"
         ></Input>
       </div>
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between">
         <div className="hover:bg-blue-100 p-3 rounded-2xl ">
-          <Bell></Bell>
+          <Bell />
         </div>
-        <div className="relative h-10 w-10 rounded-full bg-blue-700 text-white flex items-center justify-center text-lg after:content-[''] after:absolute after:w-3 after:h-3 after:bg-green-600 after:rounded-full after:bottom-0 after:right-0">
-          JD
-        </div>
-        <Dropdown></Dropdown>
+        <Dropdown />
       </div>
     </header>
   );
