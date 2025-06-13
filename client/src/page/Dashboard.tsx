@@ -1,5 +1,6 @@
 import { Activity, Clock, LineChart, Users, CheckCircle } from "lucide-react";
 import Summarycard from "./Summarycard";
+import Recentsproject from "./Recentsproject";
 
 const summaryCards = [
   {
@@ -65,6 +66,7 @@ function Dashboard() {
           <Summarycard key={index} {...card} />
         ))}
       </div>
+      <Recentsproject/>
     </div>
   );
 }
