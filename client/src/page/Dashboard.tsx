@@ -1,6 +1,7 @@
 import { Activity, Clock, LineChart, Users, CheckCircle } from "lucide-react";
 import Summarycard from "./Summarycard";
 import Recentsproject from "./Recentsproject";
+import KanbanBoard from "./KanbanBoard";
 
 const summaryCards = [
   {
@@ -67,6 +68,7 @@ function Dashboard() {
         ))}
       </div>
       <Recentsproject/>
+      <KanbanBoard/>
     </div>
   );
 }
