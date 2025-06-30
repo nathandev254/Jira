@@ -1,5 +1,5 @@
-// types.ts
 export type Task = {
+  id: string;
   title: string;
   project: string;
   description: string;
@@ -10,7 +10,7 @@ export type Task = {
   assignee: string;
 };
 
-export type TaskColumnType = {
+export type TaskColumn = {
   title: string;
   tasks: Task[];
 };

@@ -1,5 +1,9 @@
-
+import { useState } from "react";
 import Tasksboard from "./Tasksboard";
+import { TaskColumn } from "./types";
+
+
+
 
 const taskBoard = [
   {
@@ -74,6 +78,8 @@ const taskBoard = [
   },
 ];
 
+
+
 function KanbanBoard() {
   return (
     <div className=" p-2 w-full">
@@ -87,20 +93,7 @@ function KanbanBoard() {
                 {column.tasks.length}
               </span>
             </div>
-            <div className="bg-gray-200 p-5 rounded-md flex flex-col gap-5 h-full">
-              <Tasksboard tasks={column.tasks} title={column.title} />
-            </div>
-          </div>
-        ))}
-        {taskBoard.map((column, index) => (
-          <div className="w-full" key={index}>
-            <div className="flex justify-between items-center mb-3">
-              <h2>{column.title}</h2>
-              <span className="text-sm text-gray-800 h-5 w-5 rounded-full bg-gray-300 flex justify-center items-center">
-                {column.tasks.length}
-              </span>
-            </div>
-            <div className="bg-gray-200 p-5 rounded-md flex flex-col gap-5 h-full">
+            <div className="bg-gray-200 p-5 rounded-md flex flex-col  h-full">
               <Tasksboard tasks={column.tasks} title={column.title} />
             </div>
           </div>

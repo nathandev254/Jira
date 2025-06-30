@@ -9,9 +9,9 @@ type TasksboardProps = {
 
 function Tasksboard({ tasks, title }: TasksboardProps) {
   return (
-    <div>
+    <div className="">
       {tasks.map((task, index) => (
-        <div key={index} className="bg-white p-4 rounded-md">
+        <div key={index} className="bg-white p-4 rounded-md m-3">
           <div className="flex justify-between mb-2">
             <Badge variant="destructive">{title}</Badge>
             <span className="text-sm">{task.priority}</span>
