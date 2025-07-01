@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient, Taskstatus } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { JwtPayload } from "jsonwebtoken";
 
 const prisma = new PrismaClient();
