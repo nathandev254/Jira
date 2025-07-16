@@ -1,9 +1,4 @@
-import { useState } from "react";
 import Tasksboard from "./Tasksboard";
-import { TaskColumn } from "./types";
-
-
-
 
 const taskBoard = [
   {
@@ -77,8 +72,6 @@ const taskBoard = [
     ],
   },
 ];
-
-
 
 function KanbanBoard() {
   return (
