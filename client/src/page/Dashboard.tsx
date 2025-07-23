@@ -2,8 +2,20 @@ import { Activity, Clock, LineChart, Users, CheckCircle } from "lucide-react";
 import Summarycard from "./Summarycard";
 import Recentsproject from "./Recentsproject";
 import KanbanBoard from "./KanbanBoard";
+import { useState, ReactNode } from "react";
 
-const summaryCards = [
+type SummaryCard = {
+  title: string;
+  value: string;
+  subtitle: string;
+  icon: ReactNode;
+  bgColor: string;
+  textColor: string;
+  iconBg: string;
+  shadowColor: string;
+};
+
+const summaryCards: SummaryCard[] = [
   {
     title: "Total Tasks",
     value: "12",
@@ -47,6 +59,9 @@ const summaryCards = [
 ];
 
 function Dashboard() {
+  
+  const [summarycards, setSummarycards] = useState<SummaryCard[]>(summaryCards);
+
   return (
     <div>
       <div className="rounded-3xl p-7 shadow-2xl bg-gradient-to-br from-white to-violet-50 m-4	">
@@ -63,12 +78,12 @@ function Dashboard() {
         </div>
       </div>
       <div className="flex justify-between items-center gap-3">
-        {summaryCards.map((card, index) => (
+        {summarycards.map((card, index) => (
           <Summarycard key={index} {...card} />
         ))}
       </div>
-      <Recentsproject/>
-      <KanbanBoard/>
+      <Recentsproject />
+      <KanbanBoard />
     </div>
   );
 }

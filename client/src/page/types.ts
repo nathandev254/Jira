@@ -8,11 +8,11 @@ export type Task = {
   comments: number;
   priority: "Low" | "Medium" | "High";
   assignee: string;
+  status: string;
 };
 
 export type TaskColumn = {
+  id: string;
   title: string;
   tasks: Task[];
 };
-
-

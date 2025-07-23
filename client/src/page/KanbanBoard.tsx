@@ -1,10 +1,13 @@
 import Tasksboard from "./Tasksboard";
+import { TaskColumn } from "./types";
 
-const taskBoard = [
+const taskBoard: TaskColumn[] = [
   {
+    id: "todo",
     title: "To Do",
     tasks: [
       {
+        id: "1",
         title: "Create social media content calendar",
         project: "Marketing Campaign",
         description: "Plan posts for Twitter, LinkedIn and Instagram",
@@ -13,8 +16,10 @@ const taskBoard = [
         comments: 0,
         priority: "Medium",
         assignee: "JS",
+        status: "todo"
       },
       {
+        id: "2",
         title: "Fix login page responsiveness",
         project: "Mobile App Development",
         description: "Ensure login page displays correctly on mobile devices",
@@ -23,13 +28,16 @@ const taskBoard = [
         comments: 0,
         priority: "Low",
         assignee: "JD",
+        status: "todo"
       },
     ],
   },
   {
+    id: "in-progress",
     title: "In Progress",
     tasks: [
       {
+        id: "3",
         title: "Implement authentication system",
         project: "Mobile App Development",
         description: "Set up user authentication with JWT",
@@ -38,13 +46,16 @@ const taskBoard = [
         comments: 0,
         priority: "High",
         assignee: "RJ",
+        status: "in-progress"
       },
     ],
   },
   {
+    id: "review",
     title: "In Review",
     tasks: [
       {
+        id: "4",
         title: "Integrate Stripe payment gateway",
         project: "API Integration",
         description: "Implement payment processing with Stripe API",
@@ -53,13 +64,16 @@ const taskBoard = [
         comments: 1,
         priority: "High",
         assignee: "RJ",
+        status: "review"
       },
     ],
   },
   {
+    id: "done",
     title: "Completed",
     tasks: [
       {
+        id: "5",
         title: "Create wireframes for homepage",
         project: "Website Redesign",
         description: "Design wireframes for the new homepage layout",
@@ -68,10 +82,12 @@ const taskBoard = [
         comments: 1,
         priority: "High",
         assignee: "JD",
+        status: "done"
       },
     ],
   },
 ];
+
 
 function KanbanBoard() {
   return (
