@@ -21,6 +21,7 @@ function Summarycard({
   iconBg,
   shadowColor,
 }: SummaryCardProps) {
+  
   return (
     <div
       className={`relative p-7 min-w-[240px] flex flex-col flex-1 justify-between rounded-xl shadow-sm  overflow-hidden ${bgColor} ${shadowColor}`}
