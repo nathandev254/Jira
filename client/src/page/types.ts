@@ -14,5 +14,4 @@ export type Task = {
 export type TaskColumn = {
   id: string;
   title: string;
-  tasks: Task[];
 };
