@@ -1,4 +1,9 @@
-import Tasksboard from "./TaskCard";
+import { useState } from "react";
+import Taskscard from "./TaskCard";
+import Column from "./columnboard";
+
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+
 
 export type Task = {
   id: string;
@@ -21,6 +26,7 @@ export type TaskColumn = {
 const COLUMNS: TaskColumn[] = [
   { id: "TODO", title: "To Do" },
   { id: "IN_PROGRESS", title: "In Progress" },
+  { id: "IN_REVIEW", title: "In Review" },
   { id: "DONE", title: "Done" },
 ];
 
@@ -88,30 +94,46 @@ const tasks: Task[] = [
 ];
 
 function KanbanBoard() {
+   const [Tasks, setTasks] = useState<Task[]>(tasks);
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    const taskid = active.id as string;
+    const newstatus = over.id as Task["status"];
+
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskid ? { ...task, status: newstatus } : task
+      )
+    );
+  };
+
   return (
     <div className="p-2 w-full">
       <h1 className="font-medium text-2xl mb-2">TaskBoard</h1>
       <div className="flex gap-6 overflow-x-hidden">
-        {COLUMNS.map((column, index) => {
-          const columnTasks = tasks.filter((task) => task.status === column.id);
+        <DndContext onDragEnd={handleDragEnd}>
+          {COLUMNS.map((column, index) => {
+            const columnTasks = Tasks.filter(
+              (task) => task.status === column.id
+            );
 
-          return (
-            <div className="w-full" key={index}>
-              <div className="flex justify-between items-center mb-3">
-                <h2>{column.title}</h2>
-                <span className="text-sm text-gray-800 h-5 w-5 rounded-full bg-gray-300 flex justify-center items-center">
-                  {columnTasks.length}
-                </span>
+            return (
+              <div className="w-full" key={index}>
+                <Column title={column.title} length={columnTasks.length}></Column>
+                <div className="bg-gray-200 p-5 rounded-md flex flex-col h-full">
+                  <Taskscard tasks={columnTasks} title={column.title} />
+                </div>
               </div>
-              <div className="bg-gray-200 p-5 rounded-md flex flex-col h-full">
-                <Tasksboard tasks={columnTasks} title={column.title} />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </DndContext>
       </div>
     </div>
   );
 }
 
-export default KanbanBoard
+export default KanbanBoard;
