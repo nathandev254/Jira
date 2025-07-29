@@ -8,7 +8,7 @@ export type Task = {
   comments: number;
   priority: "Low" | "Medium" | "High";
   assignee: string;
-  status: string;
+  status: "TODO" | "IN_PROGRESS" | "DONE" | "IN_REVIEW";
 };
 
 export type TaskColumn = {

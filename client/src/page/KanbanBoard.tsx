@@ -1,4 +1,4 @@
-import Tasksboard from "./Tasksboard";
+import Tasksboard from "./TaskCard";
 
 export type Task = {
   id: string;
