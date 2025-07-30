@@ -1,9 +1,7 @@
 import { useState } from "react";
-import Taskscard from "./TaskCard";
-import Column from "./columnboard";
+import DroppableColumn from "./Droppablecolumn";
 
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-
 
 export type Task = {
   id: string;
@@ -30,7 +28,7 @@ const COLUMNS: TaskColumn[] = [
   { id: "DONE", title: "Done" },
 ];
 
-const tasks: Task[] = [
+const initialTasks: Task[] = [
   {
     id: "1",
     title: "Create social media content calendar",
@@ -94,19 +92,19 @@ const tasks: Task[] = [
 ];
 
 function KanbanBoard() {
-   const [Tasks, setTasks] = useState<Task[]>(tasks);
+  const [Tasks, setTasks] = useState<Task[]>(initialTasks);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over) return;
 
-    const taskid = active.id as string;
-    const newstatus = over.id as Task["status"];
+    const taskId = active.id as string;
+    const newStatus = over.id as Task["status"];
 
     setTasks((prev) =>
       prev.map((task) =>
-        task.id === taskid ? { ...task, status: newstatus } : task
+        task.id === taskId ? { ...task, status: newStatus } : task
       )
     );
   };
@@ -114,20 +112,19 @@ function KanbanBoard() {
   return (
     <div className="p-2 w-full">
       <h1 className="font-medium text-2xl mb-2">TaskBoard</h1>
-      <div className="flex gap-6 overflow-x-hidden">
+      <div className="flex gap-6 overflow-x-auto">
         <DndContext onDragEnd={handleDragEnd}>
-          {COLUMNS.map((column, index) => {
+          {COLUMNS.map((column) => {
             const columnTasks = Tasks.filter(
               (task) => task.status === column.id
             );
-
+            
             return (
-              <div className="w-full" key={index}>
-                <Column title={column.title} length={columnTasks.length}></Column>
-                <div className="bg-gray-200 p-5 rounded-md flex flex-col h-full">
-                  <Taskscard tasks={columnTasks} title={column.title} />
-                </div>
-              </div>
+              <DroppableColumn
+                key={column.id}
+                column={column}
+                tasks={columnTasks}
+              />
             );
           })}
         </DndContext>
