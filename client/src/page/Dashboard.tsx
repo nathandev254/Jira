@@ -4,6 +4,8 @@ import Recentsproject from "./Recentsproject";
 import KanbanBoard from "./KanbanBoard";
 import { useState, ReactNode } from "react";
 
+import CreateTask from "./CreateTaskModal";
+
 type SummaryCard = {
   title: string;
   value: string;
@@ -59,29 +61,34 @@ const summaryCards: SummaryCard[] = [
 ];
 
 function Dashboard() {
-  
   const [summarycards, setSummarycards] = useState<SummaryCard[]>(summaryCards);
 
   return (
     <div>
-      <div className="rounded-3xl p-7 shadow-2xl bg-gradient-to-br from-white to-violet-50 m-4	">
-        <div className="flex gap-4">
-          <div className="p-4 bg-violet-500 flex items-center justify-center rounded-xl  shadow-md">
-            <Activity className="h-5 w-5 text-white" />
+      <div className="rounded-3xl p-7 shadow-2xl bg-gradient-to-br from-white to-violet-50 m-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-start gap-4">
+            <div className="p-4 bg-violet-500 flex items-center justify-center rounded-xl shadow-md">
+              <Activity className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-violet-600">Dashboard</h1>
+              <p className="text-gray-600">
+                Welcome to TaskFlow Nexus. Here's an overview of your tasks and
+                projects.
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-violet-500 font-bold text-2xl">Dashboard</h1>
-            <p className="text-grey">
-              Welcome to the Taskflow, here is the overview of your tasks
-            </p>
-          </div>
+          <CreateTask />
         </div>
       </div>
+
       <div className="flex justify-between items-center gap-3">
         {summarycards.map((card, index) => (
           <Summarycard key={index} {...card} />
         ))}
       </div>
+
       <Recentsproject />
       <KanbanBoard />
     </div>
