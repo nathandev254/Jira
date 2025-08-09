@@ -47,7 +47,6 @@ function CreateTaskModal() {
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
@@ -83,7 +82,6 @@ function CreateTaskModal() {
             </DialogDescription>
           </DialogHeader>
 
-          {/* Title */}
           <div className="space-y-2">
             <Label htmlFor="title">Title *</Label>
             <Input
@@ -96,7 +94,6 @@ function CreateTaskModal() {
             )}
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
@@ -106,7 +103,6 @@ function CreateTaskModal() {
             />
           </div>
 
-          {/* Priority & Status */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Priority</Label>
@@ -153,7 +149,6 @@ function CreateTaskModal() {
             </div>
           </div>
 
-          {/* Due Date & Assignee */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="dueDate">Due Date</Label>
@@ -175,7 +170,6 @@ function CreateTaskModal() {
             </div>
           </div>
 
-          {/* Footer */}
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" type="button">
