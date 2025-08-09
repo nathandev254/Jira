@@ -1,8 +1,4 @@
-import { useForm } from "react-hook-form";
-import { date, Schema, z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Plus } from "lucide-react";
+"use client";
 
 import {
   DialogTrigger,
@@ -25,8 +21,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Plus } from "lucide-react";
 
-const schema = z.object({
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
   priority: z.enum(["low", "medium", "high"], {
@@ -35,19 +36,35 @@ const schema = z.object({
   status: z.enum(["todo", "inprogress", "completed"], {
     errorMap: () => ({ message: "Select a status" }),
   }),
-  date: z.string().optional(),
+  dueDate: z.string().optional(),
   assignee: z.string().optional(),
 });
 
-type taskFormtype = z.infer<typeof schema>;
-
-const { register,handleSubmit } = useForm<taskFormtype>({
-  resolver: zodResolver(schema),
-});
-
-
+type TaskFormData = z.infer<typeof taskSchema>;
 
 function CreateTaskModal() {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<TaskFormData>({
+    resolver: zodResolver(taskSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      priority: undefined,
+      status: undefined,
+      dueDate: "",
+      assignee: "",
+    },
+  });
+
+  const onSubmit = (data: TaskFormData) => {
+    console.log("Task Data:", data);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,8 +73,9 @@ function CreateTaskModal() {
           Create Task
         </Button>
       </DialogTrigger>
-      <form action="">
-        <DialogContent className="sm:max-w-2xl">
+
+      <DialogContent className="sm:max-w-2xl">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <DialogHeader>
             <DialogTitle>Create New Task</DialogTitle>
             <DialogDescription>
@@ -65,24 +83,38 @@ function CreateTaskModal() {
             </DialogDescription>
           </DialogHeader>
 
+          {/* Title */}
           <div className="space-y-2">
             <Label htmlFor="title">Title *</Label>
-            <Input {...register("title")} id="title" placeholder="Enter task title..." />
+            <Input
+              id="title"
+              placeholder="Enter task title..."
+              {...register("title")}
+            />
+            {errors.title && (
+              <p className="text-sm text-red-500">{errors.title.message}</p>
+            )}
           </div>
 
+          {/* Description */}
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
-              {...register("description")}
               id="description"
               placeholder="Enter task description..."
+              {...register("description")}
             />
           </div>
 
+          {/* Priority & Status */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Priority</Label>
-              <Select {...register("priority")}>
+              <Select
+                onValueChange={(value) =>
+                  setValue("priority", value as TaskFormData["priority"])
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
@@ -92,10 +124,20 @@ function CreateTaskModal() {
                   <SelectItem value="high">High Priority</SelectItem>
                 </SelectContent>
               </Select>
+              {errors.priority && (
+                <p className="text-sm text-red-500">
+                  {errors.priority.message}
+                </p>
+              )}
             </div>
+
             <div className="space-y-2">
               <Label>Status</Label>
-              <Select {...register("status")}>
+              <Select
+                onValueChange={(value) =>
+                  setValue("status", value as TaskFormData["status"])
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
@@ -105,17 +147,21 @@ function CreateTaskModal() {
                   <SelectItem value="completed">Completed</SelectItem>
                 </SelectContent>
               </Select>
+              {errors.status && (
+                <p className="text-sm text-red-500">{errors.status.message}</p>
+              )}
             </div>
           </div>
 
+          {/* Due Date & Assignee */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="dueDate">Due Date</Label>
-              <Input {...register("date")} type="date" id="dueDate" />
+              <Input type="date" id="dueDate" {...register("dueDate")} />
             </div>
             <div className="space-y-2">
               <Label>Assignee</Label>
-              <Select {...register("assignee")}>
+              <Select onValueChange={(value) => setValue("assignee", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select assignee" />
                 </SelectTrigger>
@@ -129,16 +175,19 @@ function CreateTaskModal() {
             </div>
           </div>
 
+          {/* Footer */}
           <DialogFooter className="mt-4">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" type="button">
+                Cancel
+              </Button>
             </DialogClose>
-            <Button className="bg-purple-500 hover:bg-purple-600">
+            <Button className="bg-purple-500 hover:bg-purple-600" type="submit">
               Create Task
             </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }
