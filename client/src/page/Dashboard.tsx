@@ -79,7 +79,9 @@ function Dashboard() {
               </p>
             </div>
           </div>
-          <CreateTask />
+          <div>
+            <CreateTask />
+          </div>
         </div>
       </div>
 
