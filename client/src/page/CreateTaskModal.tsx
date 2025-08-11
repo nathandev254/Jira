@@ -47,7 +47,8 @@ function CreateTaskModal() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    trigger,
+    formState: { errors, isSubmitting },
   } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
@@ -60,8 +61,13 @@ function CreateTaskModal() {
     },
   });
 
-  const onSubmit = (data: TaskFormData) => {
-    console.log("Task Data:", data);
+  const onSubmit = async (data: TaskFormData) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -82,6 +88,7 @@ function CreateTaskModal() {
             </DialogDescription>
           </DialogHeader>
 
+          {/* Title */}
           <div className="space-y-2">
             <Label htmlFor="title">Title *</Label>
             <Input
@@ -94,6 +101,7 @@ function CreateTaskModal() {
             )}
           </div>
 
+          {/* Description */}
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
@@ -103,13 +111,15 @@ function CreateTaskModal() {
             />
           </div>
 
+          {/* Priority & Status */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Priority</Label>
               <Select
-                onValueChange={(value) =>
-                  setValue("priority", value as TaskFormData["priority"])
-                }
+                onValueChange={(value) => {
+                  setValue("priority", value as TaskFormData["priority"]);
+                  trigger("priority");
+                }}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select priority" />
@@ -130,9 +140,10 @@ function CreateTaskModal() {
             <div className="space-y-2">
               <Label>Status</Label>
               <Select
-                onValueChange={(value) =>
-                  setValue("status", value as TaskFormData["status"])
-                }
+                onValueChange={(value) => {
+                  setValue("status", value as TaskFormData["status"]);
+                  trigger("status");
+                }}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
@@ -149,6 +160,7 @@ function CreateTaskModal() {
             </div>
           </div>
 
+          {/* Due Date & Assignee */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="dueDate">Due Date</Label>
@@ -156,7 +168,9 @@ function CreateTaskModal() {
             </div>
             <div className="space-y-2">
               <Label>Assignee</Label>
-              <Select onValueChange={(value) => setValue("assignee", value)}>
+              <Select
+                onValueChange={(value) => setValue("assignee", value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select assignee" />
                 </SelectTrigger>
@@ -170,14 +184,19 @@ function CreateTaskModal() {
             </div>
           </div>
 
+          {/* Footer */}
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" type="button">
                 Cancel
               </Button>
             </DialogClose>
-            <Button className="bg-purple-500 hover:bg-purple-600" type="submit">
-              Create Task
+            <Button
+              disabled={isSubmitting}
+              className="bg-purple-500 hover:bg-purple-600"
+              type="submit"
+            >
+              {isSubmitting ? "Loading..." : "Create Task"}
             </Button>
           </DialogFooter>
         </form>
@@ -185,4 +204,5 @@ function CreateTaskModal() {
     </Dialog>
   );
 }
+
 export default CreateTaskModal;
