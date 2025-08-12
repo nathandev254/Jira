@@ -26,6 +26,8 @@ import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -42,13 +44,20 @@ const taskSchema = z.object({
 
 type TaskFormData = z.infer<typeof taskSchema>;
 
+const Addtask = async (data: TaskFormData) => {
+  const res = await axios.post("/api/tasks", data);
+  return res.data;
+};
+
 function CreateTaskModal() {
+  const QueryClient = useQueryClient();
+  
   const {
     register,
     handleSubmit,
     setValue,
     trigger,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
@@ -61,15 +70,19 @@ function CreateTaskModal() {
     },
   });
 
-  const onSubmit = async (data: TaskFormData) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const mutation = useMutation({
+    mutationFn: Addtask,
+    onSuccess: () => {
+      QueryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+    onError: (error: any) => {
+      alert(error.response?.data?.message || "Something went wrong");
+    },
+  });
 
+  const onSubmit = async (data: TaskFormData) => {
+    await mutation.mutateAsync(data);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -168,9 +181,7 @@ function CreateTaskModal() {
             </div>
             <div className="space-y-2">
               <Label>Assignee</Label>
-              <Select
-                onValueChange={(value) => setValue("assignee", value)}
-              >
+              <Select onValueChange={(value) => setValue("assignee", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select assignee" />
                 </SelectTrigger>
@@ -192,11 +203,11 @@ function CreateTaskModal() {
               </Button>
             </DialogClose>
             <Button
-              disabled={isSubmitting}
+              disabled={mutation.isPending}
               className="bg-purple-500 hover:bg-purple-600"
               type="submit"
             >
-              {isSubmitting ? "Loading..." : "Create Task"}
+              {mutation.isPending ? "Loading..." : "Create Task"}
             </Button>
           </DialogFooter>
         </form>

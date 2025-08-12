@@ -18,29 +18,19 @@ model User {
   createdAt DateTime @default(now())
 }
 
-model TaskColumn {
-  id    String @id @default(uuid())
-  title String
-  tasks Task[] @relation("ColumnTasks")
-}
-
 model Task {
   id          String       @id @default(uuid())
   title       String
   project     String?
-  description String?
-  tags        String[]     
-  date        DateTime     @default(now())
-  comments    Int          @default(0)
+  description String
+  tags String[] @default([])     
+  dueDate     DateTime?    
   priority    TaskPriority @default(MEDIUM)
   assignee    String?
   status      Taskstatus   @default(PENDING)
 
   user        User         @relation(fields: [userid], references: [id])
   userid      String
-
-  column      TaskColumn   @relation("ColumnTasks", fields: [columnId], references: [id])
-  columnId    String
 
   createdAt   DateTime     @default(now())
 }
