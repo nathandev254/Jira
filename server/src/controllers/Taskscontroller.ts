@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
-import { JwtPayload } from "jsonwebtoken";
-import prisma from "../prisma/client"; // adjust path to your prisma client
+// import { JwtPayload } from "jsonwebtoken";
+
+import { PrismaClient } from "@prisma/client";
+
+
+const prisma = new PrismaClient();
+
 
 export const CreateTask = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -36,16 +41,16 @@ export const CreateTask = async (req: Request, res: Response): Promise<void> => 
 
 
 
-// export const GetTasks = async (req: Request, res: Response): Promise<void> => {
-//   try {
-//     const userid = (req.user as JwtPayload).id;
-//     const Tasks = await prisma.task.findMany({ where: { userid } });
+export const GetTasks = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userid = (req.user as JwtPayload).id;
+    const Tasks = await prisma.task.findMany({ where: { userid } });
 
-//     res.status(200).json({ message: "Tasks fetched", Tasks });
-//   } catch (error) {
-//     res.status(500).json("failed to fetch the tasks");
-//   }
-// };
+    res.status(200).json({ message: "Tasks fetched", Tasks });
+  } catch (error) {
+    res.status(500).json("failed to fetch the tasks");
+  }
+};
 
 // export const DeleteTasks = async (
 //   req: Request,
