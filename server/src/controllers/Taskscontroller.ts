@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import { JwtPayload } from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export const CreateTask = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = (req.user as JwtPayload).id;
+    const userid = "test-user-id";
     const { title, description, priority, status, dueDate, assignee } = req.body;
 
     if (!title || !status) {
@@ -22,7 +21,7 @@ export const CreateTask = async (req: Request, res: Response): Promise<void> => 
         status,
         dueDate: dueDate ? new Date(dueDate) : null,
         assignee,
-        userId, // ✅ link task to user
+        userid, 
       },
     });
 
@@ -38,10 +37,10 @@ export const CreateTask = async (req: Request, res: Response): Promise<void> => 
 
 export const GetTasks = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = (req.user as JwtPayload).id;
+    const userid = "test-user-id";
     const tasks = await prisma.task.findMany({
-      where: { userId },
-      orderBy: { createdAt: "desc" }, // optional: newest first
+      where: { userid },
+      orderBy: { createdAt: "desc" },
     });
 
     res.status(200).json({ message: "Tasks fetched", tasks });
@@ -53,12 +52,12 @@ export const GetTasks = async (req: Request, res: Response): Promise<void> => {
 
 export const DeleteTask = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = (req.user as JwtPayload).id;
+    const userid = "test-user-id";
     const taskId = req.params.id;
 
     const task = await prisma.task.findUnique({ where: { id: taskId } });
 
-    if (!task || task.userId !== userId) {
+    if (!task || task.userid !== userid) {
       res.status(404).json({ message: "Task not found or not authorized" });
       return;
     }

@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import Signin from "./page/Signin";
+import Signup from "./page/Signup";
 import Authlayout from "./layouts/Authlayout";
 import Layout from "./layouts/Sidebarlayout";
 import Dashboard from "./page/Dashboard";
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { index: true, element: <Navigate to="dashboard" replace /> },
+      // No index route here
       { path: "dashboard", element: <Dashboard /> },
       { path: "tasks", element: <Tasks /> },
       { path: "projects", element: <Projects /> },
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
   {
     path: "",
     element: <Authlayout />,
-    children: [{ path: "signin", element: <Signin /> }],
+    children: [
+      { index: true, element: <Signup /> },
+      { path: "signin", element: <Signin /> },
+      { path: "signup", element: <Signup /> },
+    ],
   },
 ]);
 

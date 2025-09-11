@@ -6,9 +6,9 @@ export type Task = {
   tags: string[];
   date: string;
   comments: number;
-  priority: "Low" | "Medium" | "High";
+  priority: "HIGH" | "MEDIUM" | "LOW";
   assignee: string;
-  status: "TODO" | "IN_PROGRESS" | "DONE" | "IN_REVIEW";
+  status: "COMPLETED" | "PENDING" | "IN_PROGRESS" | "REVIEW";
 };
 
 export type TaskColumn = {

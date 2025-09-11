@@ -11,9 +11,9 @@ export type Task = {
   tags: string[];
   date: string;
   comments: number;
-  priority: "Low" | "Medium" | "High";
+  priority: "HIGH" | "MEDIUM" | "LOW";
   assignee: string;
-  status: "TODO" | "IN_PROGRESS" | "DONE" | "IN_REVIEW";
+  status: "COMPLETED" | "PENDING" | "IN_PROGRESS" | "REVIEW";
 };
 
 export type TaskColumn = {
@@ -22,10 +22,10 @@ export type TaskColumn = {
 };
 
 const COLUMNS: TaskColumn[] = [
-  { id: "TODO", title: "To Do" },
+  { id: "PENDING", title: "To Do" },
   { id: "IN_PROGRESS", title: "In Progress" },
-  { id: "IN_REVIEW", title: "In Review" },
-  { id: "DONE", title: "Done" },
+  { id: "REVIEW", title: "In Review" },
+  { id: "COMPLETED", title: "Done" },
 ];
 
 const initialTasks: Task[] = [
@@ -37,9 +37,9 @@ const initialTasks: Task[] = [
     tags: ["Research"],
     date: "Jul 15, 2023",
     comments: 0,
-    priority: "Medium",
+    priority: "MEDIUM",
     assignee: "JS",
-    status: "TODO",
+    status: "PENDING",
   },
   {
     id: "2",
@@ -49,9 +49,9 @@ const initialTasks: Task[] = [
     tags: ["Bug", "Design"],
     date: "Jun 20, 2023",
     comments: 0,
-    priority: "Low",
+    priority: "LOW",
     assignee: "JD",
-    status: "TODO",
+    status: "PENDING",
   },
   {
     id: "3",
@@ -61,7 +61,7 @@ const initialTasks: Task[] = [
     tags: ["Feature"],
     date: "Jul 01, 2023",
     comments: 0,
-    priority: "High",
+    priority: "HIGH",
     assignee: "RJ",
     status: "IN_PROGRESS",
   },
@@ -73,9 +73,9 @@ const initialTasks: Task[] = [
     tags: ["Feature"],
     date: "Apr 25, 2023",
     comments: 1,
-    priority: "High",
+    priority: "HIGH",
     assignee: "RJ",
-    status: "IN_REVIEW",
+    status: "REVIEW",
   },
   {
     id: "5",
@@ -85,9 +85,9 @@ const initialTasks: Task[] = [
     tags: ["Design"],
     date: "May 15, 2023",
     comments: 1,
-    priority: "High",
+    priority: "HIGH",
     assignee: "JD",
-    status: "DONE",
+    status: "COMPLETED",
   },
 ];
 

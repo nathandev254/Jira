@@ -32,10 +32,10 @@ import axios from "axios";
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
-  priority: z.enum(["low", "medium", "high"], {
+  priority: z.enum(["HIGH", "MEDIUM", "LOW"], {
     errorMap: () => ({ message: "Select a priority" }),
   }),
-  status: z.enum(["todo", "inprogress", "completed"], {
+  status: z.enum(["COMPLETED", "PENDING", "IN_PROGRESS", "REVIEW"], {
     errorMap: () => ({ message: "Select a status" }),
   }),
   dueDate: z.string().optional(),
@@ -63,10 +63,10 @@ function CreateTaskModal() {
     defaultValues: {
       title: "",
       description: "",
-      priority: undefined,
-      status: undefined,
       dueDate: "",
+      priority: "MEDIUM",
       assignee: "",
+      status: "PENDING",
     },
   });
 
@@ -101,7 +101,7 @@ function CreateTaskModal() {
             </DialogDescription>
           </DialogHeader>
 
-          {/* Title */}
+          
           <div className="space-y-2">
             <Label htmlFor="title">Title *</Label>
             <Input
@@ -114,7 +114,7 @@ function CreateTaskModal() {
             )}
           </div>
 
-          {/* Description */}
+          
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
@@ -124,7 +124,7 @@ function CreateTaskModal() {
             />
           </div>
 
-          {/* Priority & Status */}
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Priority</Label>
@@ -138,9 +138,9 @@ function CreateTaskModal() {
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="low">Low Priority</SelectItem>
-                  <SelectItem value="medium">Medium Priority</SelectItem>
-                  <SelectItem value="high">High Priority</SelectItem>
+                  <SelectItem value="HIGH">High Priority</SelectItem>
+                  <SelectItem value="MEDIUM">Medium Priority</SelectItem>
+                  <SelectItem value="LOW">Low Priority</SelectItem>
                 </SelectContent>
               </Select>
               {errors.priority && (
@@ -162,9 +162,10 @@ function CreateTaskModal() {
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todo">To Do</SelectItem>
-                  <SelectItem value="inprogress">In Progress</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="COMPLETED">Completed</SelectItem>
+                  <SelectItem value="PENDING">Pending</SelectItem>
+                  <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
+                  <SelectItem value="REVIEW">Review</SelectItem>
                 </SelectContent>
               </Select>
               {errors.status && (
@@ -173,7 +174,7 @@ function CreateTaskModal() {
             </div>
           </div>
 
-          {/* Due Date & Assignee */}
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="dueDate">Due Date</Label>
@@ -195,7 +196,7 @@ function CreateTaskModal() {
             </div>
           </div>
 
-          {/* Footer */}
+          
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" type="button">
