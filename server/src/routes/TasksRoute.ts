@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { CreateTasks } from "../controllers/Taskscontroller";
+import { CreateTask } from "../controllers/Taskscontroller";
 // import { Verifytoken } from "../middlewares/Authmiddleware";
 
 
 const TasksRouter = Router()
 
-TasksRouter.post('/', CreateTasks )
+TasksRouter.post('/', CreateTask )
 // TasksRouter.get('/', Verifytoken, GetTasks )
 // TasksRouter.delete('/:id', Verifytoken, DeleteTasks)
 
