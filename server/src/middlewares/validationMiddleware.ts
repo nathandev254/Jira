@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { z, ZodType } from "zod";gfdsadfnm,
+import { z, ZodType } from "zod";
 
 export const validateRequest = (schema: ZodType) => {
   return (req: Request, res: Response, next: NextFunction): void => {
