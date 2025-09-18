@@ -21,9 +21,7 @@ model User {
 model Task {
   id          String       @id @default(uuid())
   title       String
-  project     String?
-  description String
-  tags String[] @default([])     
+  description String?
   dueDate     DateTime?    
   priority    TaskPriority @default(MEDIUM)
   assignee    String?

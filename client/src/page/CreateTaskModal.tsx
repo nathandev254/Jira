@@ -45,7 +45,7 @@ const taskSchema = z.object({
 type TaskFormData = z.infer<typeof taskSchema>;
 
 const Addtask = async (data: TaskFormData) => {
-  const res = await axios.post("/api/tasks", data);
+  const res = await axios.post("/task", data);
   return res.data;
 };
 

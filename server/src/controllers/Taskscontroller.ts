@@ -1,26 +1,24 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { CreateTaskInput } from "../schemas/taskSchemas";
 
 const prisma = new PrismaClient();
 
-export const CreateTask = async (req: Request, res: Response): Promise<void> => {
+export const CreateTask = async (req: Request<{}, {}, CreateTaskInput>, res: Response): Promise<void> => {
   try {
     const userid = "test-user-id";
     const { title, description, priority, status, dueDate, assignee } = req.body;
 
-    if (!title || !status) {
-      res.status(400).json({ message: "Title and status are required" });
-      return;
-    }
+    // No manual validation needed - req.body is already validated by Zod middleware
 
     const newTask = await prisma.task.create({
       data: {
         title,
-        description,
-        priority,
+        description: description || "", // Handle optional description for database
+        priority: priority || "MEDIUM",
         status,
         dueDate: dueDate ? new Date(dueDate) : null,
-        assignee,
+        assignee: assignee || null,
         userid, 
       },
     });
