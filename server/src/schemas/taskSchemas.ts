@@ -21,7 +21,7 @@ export const updateTaskSchema = z.object({
   priority: z.enum(["HIGH", "MEDIUM", "LOW"]).optional(),
   status: z.enum(["COMPLETED", "PENDING", "IN_PROGRESS", "REVIEW"]).optional(),
   dueDate: z.string().optional(),
-  assignee: z.string().optional(),
+  assignee: z.string().optional()  ,
 });
 
 // Type inference
